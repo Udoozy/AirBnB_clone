@@ -10,16 +10,24 @@ class BaseModel:
     """
     Basemodel for all the classes
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Innitializing the atrributes"""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == '__class__':
+                    continue
+                if key in ('created_at', 'updated_at'):
+                    value = datetime.fromisoformat(value)
+                setattr(self, key, value)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """String formated"""
         return f"[BaseModel] ({self.id}) {self.__dict__}"
-  
+
     def save(self):
         """save mothod"""
         self.updated_at = datetime.now()
