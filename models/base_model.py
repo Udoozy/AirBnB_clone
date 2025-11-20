@@ -20,17 +20,21 @@ class BaseModel:
                     value = datetime.fromisoformat(value)
                 setattr(self, key, value)
         else:
+            from models import storage
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """String formated"""
         return f"[BaseModel] ({self.id}) {self.__dict__}"
 
     def save(self):
+        from models import storage
         """save mothod"""
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """Method that converts to dictionary"""

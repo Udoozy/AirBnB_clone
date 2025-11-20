@@ -8,6 +8,10 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+classes = {
+    "BaseModel": BaseModel
+}
+
 
 class FileStorage:
     """
@@ -27,16 +31,20 @@ class FileStorage:
         """
         Sets THE __object with obj id
         """
-        j = f"{obj.__class__.__name__}.{obj.id}"
-        self.__objects[j] = obj
+        key = obj.__class__.__name__ + "." + obj.id
+        self.__objects[key] = obj
 
     def save(self):
         """
         Serializes __objects to the JSON file with d right path.
         """
-        obj_dict = {j: obj.to_dict() for j, obj in self.__objects.items()}
+        obj_dict = {}
+
+        for key, obj in self.__objects.items():
+            obj_dict[key] = obj.to_dict()
+
         with open(self.__file_path, 'w') as File:
-            json.dump(obj_dict, File)
+            json.dump(obj_dict, File, indent=4)
 
     def reload(self):
         """
@@ -47,6 +55,8 @@ class FileStorage:
                 obj_dict = json.load(File)
                 for i, j in obj_dict.items():
                     cls_name = j['__class__']
-                    self.__objects[i] = globals()[cls_name](**j)
+                    cls = classes.get(cls_name)
+                    if cls:
+                        self.__objects[i] = cls(**j)
         except FileNotFoundError:
             pass
