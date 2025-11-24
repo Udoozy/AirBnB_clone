@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
-"""
-console.py - Entry point of the HBNB command interpreter
-"""
-
 import cmd
+"""
+console.py: Entry point of commandline interpreter
+"""
 
 
 class HBNBCommand(cmd.Cmd):
-    """HBNB Command Interpreter class"""
-
+    """HBNB Commad interpreter class"""
     prompt = "(hbnb) "
 
     def do_quit(self, arg):
@@ -16,14 +14,12 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, arg):
-        """EOF command to exit the program (Ctrl+D / Ctrl+Z)"""
-        print()
+        """EOF to exit the program (ctr+D / ctr+Z)"""
         return True
 
     def emptyline(self):
-        """Do nothing on empty input line"""
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     HBNBCommand().cmdloop()
