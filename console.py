@@ -1,23 +1,29 @@
 #!/usr/bin/env python3
+"""
+console.py - Entry point of the HBNB command interpreter
+"""
+
 import cmd
-"""The cmd module"""
 
 
 class HBNBCommand(cmd.Cmd):
-    """HBNB Cmd class"""
-    prompt = "(hbnb) "
+    """HBNB Command Interpreter class"""
 
-    def emptyline(self):
-        pass
+    prompt = "(hbnb) "
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
 
     def do_EOF(self, arg):
-        """EOF for End of Life command: Ctl+D """
+        """EOF command to exit the program (Ctrl+D / Ctrl+Z)"""
+        print()
         return True
 
+    def emptyline(self):
+        """Do nothing on empty input line"""
+        pass
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
