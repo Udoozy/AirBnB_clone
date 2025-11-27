@@ -138,13 +138,13 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
             return
 
-        attr_name = args[2].strip('"').strip("'")
+        attr_name = args[2]
 
         if len(args) < 4:
             print("** value missing **")
             return
 
-        attr_value = args[3].strip('"').split("'")
+        attr_value = args[3]
 
         if attr_value.isdigit():
             casted_value = int(attr_value)
@@ -152,7 +152,7 @@ class HBNBCommand(cmd.Cmd):
             try:
                 casted_value = float(attr_value)
             except ValueError:
-                casted_value = attr_value.strip('"').strip("'")
+                casted_value = attr_value
 
         obj = all_objs[key]
         setattr(obj, attr_name, casted_value)

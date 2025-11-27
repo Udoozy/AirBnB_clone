@@ -28,7 +28,7 @@ class BaseModel:
 
     def __str__(self):
         """String formated"""
-        return f"[BaseModel] ({self.id}) {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
         from models import storage
@@ -42,4 +42,13 @@ class BaseModel:
         obj_dict["__class__"] = self.__class__.__name__
         obj_dict["created_at"] = self.created_at.isoformat()
         obj_dict["updated_at"] = self.updated_at.isoformat()
-        return obj_dict
+
+        clean_dict = {}
+        for key, value in obj_dict.items():
+            clean_key = key.strip('"').strip("'")
+            if isinstance(value, str):
+                clean_value = value.strip('"').strip("'")
+            else:
+                clean_value = value
+            clean_dict[clean_key] = clean_value
+        return clean_dict
