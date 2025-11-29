@@ -107,6 +107,19 @@ class HBNBCommand(cmd.Cmd):
 
         obj_list = [str(obj) for obj in storage.all().values()
                     if obj.__class__.__name__ == class_name]
+        print(obj_list)
+
+    def default(self, line):
+        """Handle dit notation command"""
+        if "." in line:
+            try:
+                class_name, command = line.split(".", 1)
+                if command == "all()":
+                    self.do_all(class_name)
+                    return
+            except Exception:
+                pass
+            print("*** Unknown syntax:", line)
 
     def do_update(self, arg):
         """Update attritute by adding a new one"""
