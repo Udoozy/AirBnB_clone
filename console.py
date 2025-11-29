@@ -117,6 +117,16 @@ class HBNBCommand(cmd.Cmd):
                 if command == "all()":
                     self.do_all(class_name)
                     return
+
+                if command == "count()":
+                    if class_name not in classes:
+                        print("** class doesn't exist **")
+                        return
+                    count = len([obj for obj in storage.all().values()
+                                 if obj.__class__.__name__ == class_name])
+                    print(count)
+                    return
+
             except Exception:
                 pass
             print("*** Unknown syntax:", line)
