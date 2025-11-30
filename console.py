@@ -127,6 +127,16 @@ class HBNBCommand(cmd.Cmd):
                     print(count)
                     return
 
+                if command.startswith("show(") and command.endswith(")"):
+                    obj_id = command[5:-1].strip('"').strip("'")
+                    self.do_show("{} {}".format(class_name, obj_id))
+                    return
+
+                if command.startswith("destroy(") and command.endswith(")"):
+                    obj_id = command[8:-1].strip('"').strip("'")
+                    self.do_destroy("{} {}".format(class_name, obj_id))
+                    return
+
             except Exception:
                 pass
             print("*** Unknown syntax:", line)
